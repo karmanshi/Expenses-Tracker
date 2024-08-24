@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import Navbar from './navbar'
 
 const Expanses = () => {
     const [addTransaction, setAddTransaction] = useState({})
-    const [transactionList, setTransactionList] = useState([])
+    const [transactionList, setTransactionList] = useState(() => {
+        return JSON.parse(localStorage.getItem('transaction')) || []
+      })
 
     const handleAddForm = (e) => {
         setAddTransaction({ ...addTransaction, [e.target.name]: e.target.value })
@@ -13,7 +15,6 @@ const Expanses = () => {
         e.preventDefault()
         setTransactionList([...transactionList, addTransaction])
         setAddTransaction({ paid: '', amount: '', transaction: '', date: '', category: '' })
-
     }
 
     const handleDelete = (e) => {
@@ -21,9 +22,12 @@ const Expanses = () => {
         console.log(e.target.key)
         dataDelete.splice(e.target.key, 1)
         setTransactionList([...dataDelete])
-
-
     }
+
+    useEffect(() => {
+        localStorage.setItem('transaction', JSON.stringify(transactionList));
+      }, [transactionList]);
+
     return (
         <div>
             <Navbar />
