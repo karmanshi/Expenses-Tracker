@@ -2,16 +2,26 @@ import React, { useState } from 'react'
 import Navbar from './navbar'
 
 const Expanses = () => {
-    const[addTransaction,setAddTransaction]=useState({})
-    const [transactionList,setTransactionList] = useState({})
+    const [addTransaction, setAddTransaction] = useState({})
+    const [transactionList, setTransactionList] = useState([])
 
     const handleAddForm = (e) => {
-        setAddTransaction(e.target.value)
+        setAddTransaction({ ...addTransaction, [e.target.name]: e.target.value })
     }
 
-    const handleAddTransaction = (e) =>{
+    const handleAddTransaction = (e) => {
         e.preventDefault()
-        setTransactionList({...addTransaction})
+        setTransactionList([...transactionList, addTransaction])
+        setAddTransaction({ paid: '', amount: '', transaction: '', date: '', category: '' })
+
+    }
+
+    const handleDelete = (e) => {
+        const dataDelete = [...transactionList]
+        console.log(e.target.key)
+        dataDelete.splice(e.target.key, 1)
+        setTransactionList([...dataDelete])
+
 
     }
     return (
@@ -38,7 +48,8 @@ const Expanses = () => {
                                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         placeholder=" "
                                         required=""
-                                        value={addTransaction}
+                                        name='paid'
+                                        value={addTransaction.paid}
                                         onChange={handleAddForm}
                                     />
                                 </div>
@@ -56,7 +67,8 @@ const Expanses = () => {
                                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         placeholder=" "
                                         required=""
-                                        value={addTransaction}
+                                        name='amount'
+                                        value={addTransaction.amount}
                                         onChange={handleAddForm}
                                     />
                                 </div>
@@ -74,7 +86,8 @@ const Expanses = () => {
                                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         placeholder=" "
                                         required=""
-                                        value={addTransaction}
+                                        name='transaction'
+                                        value={addTransaction.transaction}
                                         onChange={handleAddForm}
                                     />
                                 </div>
@@ -88,10 +101,11 @@ const Expanses = () => {
                                     </label>
                                     <input
                                         type="date"
+                                        name='date'
                                         id="date"
                                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         required=""
-                                        value={addTransaction}
+                                        value={addTransaction.date}
                                         onChange={handleAddForm}
                                     />
                                 </div>
@@ -106,10 +120,11 @@ const Expanses = () => {
                                     <input
                                         type="text"
                                         id="category"
+                                        name='category'
                                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         placeholder=" "
                                         required=""
-                                        value={addTransaction}
+                                        value={addTransaction.category}
                                         onChange={handleAddForm}
                                     />
                                 </div>
@@ -154,27 +169,27 @@ const Expanses = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                                    <th
-                                        scope="row"
-                                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                                    >
-                                        1
-                                    </th>
-                                    <td className="px-6 py-4">Silver</td>
-                                    <td className="px-6 py-4">Laptop</td>
-                                    <td className="px-6 py-4">$2999</td>
-                                    <td className="px-6 py-4">$2999</td>
-                                    <td className="px-6 py-4">$2999</td>
-                                    <td className="px-6 py-4">
-                                        <a
-                                            href="#"
-                                            className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                                        >
-                                            Edit
-                                        </a>
-                                    </td>
-                                </tr>
+
+                                {transactionList.map((elements, index) => {
+                                    return <tr key={index} className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                                        <td className="px-6 py-4">{index + 1}</td>
+                                        <td className="px-6 py-4">{elements.paid}</td>
+                                        <td className="px-6 py-4">{elements.amount}</td>
+                                        <td className="px-6 py-4">{elements.transaction}</td>
+                                        <td className="px-6 py-4">{elements.category}</td>
+                                        <td className="px-6 py-4">{elements.date}</td>
+                                        <td className="px-6 py-4">
+                                            <button
+                                                type='button'
+                                                className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                                                key={index}
+                                                onClick={handleDelete}
+                                            >
+                                                Delete
+                                            </button>
+                                        </td>
+                                    </tr>
+                                })}
                             </tbody>
                         </table>
                     </div>
