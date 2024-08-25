@@ -46,6 +46,31 @@ const Expanses = () => {
         }
     }
 
+    const downloadCSV = () => {
+        // Step 1: Create headers
+        const headers = Object.keys(transactionList[0]).join(",");
+
+        // Step 2: Create rows by mapping over data
+        const rows = transactionList.map((row) =>
+            Object.values(row).join(",")
+        ).join("\n");
+
+        // Step 3: Create CSV string
+        const csvString = `${headers}\n${rows}`;
+
+        // Step 4: Create Blob and trigger download
+        const blob = new Blob([csvString], { type: "text/csv" });
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "data.csv";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    };
+
+
     return (
         <div>
             <Navbar />
@@ -165,7 +190,24 @@ const Expanses = () => {
 
                     <div className=" overflow-x-auto shadow-md sm:rounded-lg col-span-3">
                         <div className='bg-cyan-200 text-cyan-800 font-bold m-3 p-2 text-center text-2xl'>List Of Transactions</div>
-                        <Search handleSearch={handleSearch} searchData={searchData} />
+                        <div className='flex'>
+                            <Search handleSearch={handleSearch} searchData={searchData} />
+                        
+                            <div className='flex justify-between items-center'>
+                            <button className="bg-blue-300 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded inline-flex items-center" onClick={downloadCSV}>
+                                <svg
+                                    className="fill-current w-4 h-4 mr-2"
+                                    stroke='white'
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 20 20"
+                                >
+                                    <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+                                </svg>
+                                <span>Download</span>
+                            </button>
+                            </div>
+
+                        </div>
                         <table className="mt-5 p-5 w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
