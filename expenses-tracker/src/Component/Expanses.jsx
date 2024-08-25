@@ -22,8 +22,7 @@ const Expanses = () => {
 
     const handleDelete = (e) => {
         const dataDelete = [...transactionList]
-        console.log(e.target.key)
-        dataDelete.splice(e.target.key, 1)
+        dataDelete.splice(e.target.name, 1)
         setTransactionList([...dataDelete])
     }
 
@@ -110,8 +109,8 @@ const Expanses = () => {
                                     >
                                         <option className="px-4 py-4 text-lg	 bg-white border rounded-lg focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40 mb-2" defaultValue=''>Select an Option</option>
 
-                                        <option className="px-4 py-4 text-lg bg-white border rounded-lg focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40 mb-2">Credit</option>
-                                        <option className="px-4 py-4 text-lg bg-white border rounded-lg focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40 mb-2">Debit</option>
+                                        <option className="px-4 py-4 text-lg bg-white border rounded-lg focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40 mb-2 " value={'credit'}>Credit</option>
+                                        <option className="px-4 py-4 text-lg bg-white border rounded-lg focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40 mb-2" value={'debit'}>Debit</option>
 
                                     </select>
                                 </div>
@@ -208,6 +207,7 @@ const Expanses = () => {
                                                 type='button'
                                                 className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                                                 key={index}
+                                                name={index}
                                                 onClick={handleDelete}
                                             >
                                                 Delete

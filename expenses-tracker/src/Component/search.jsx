@@ -37,7 +37,7 @@ const Search = (props) => {
                         value={props.searchData}
                         onChange={props.handleSearch}
                     />
-                    
+
                 </div>
             </form>
 
