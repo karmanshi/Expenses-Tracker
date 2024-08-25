@@ -50,7 +50,6 @@ const Expanses = () => {
     return (
         <div>
             <Navbar />
-            <Search handleSearch={handleSearch} searchData={searchData} />
             <div className='m-5 p-5'>
                 <div className="grid grid-flow-col gap-4">
                     <div className='col-span-1 overflow-x-auto shadow-md sm:rounded-lg '>
@@ -167,7 +166,8 @@ const Expanses = () => {
 
                     <div className=" overflow-x-auto shadow-md sm:rounded-lg col-span-3">
                         <div className='bg-cyan-200 text-cyan-800 font-bold m-3 p-2 text-center text-2xl'>List Of Transactions</div>
-                        <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <Search handleSearch={handleSearch} searchData={searchData} />
+                        <table className="mt-5 p-5 w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
                                     <th scope="col" className="px-6 py-3">
