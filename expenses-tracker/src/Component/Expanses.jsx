@@ -47,18 +47,14 @@ const Expanses = () => {
     }
 
     const downloadCSV = () => {
-        // Step 1: Create headers
-        const headers = Object.keys(transactionList[0]).join(",");
+        const headers = Object.keys(filterList[0]).join(",");
 
-        // Step 2: Create rows by mapping over data
-        const rows = transactionList.map((row) =>
+        const rows = filterList.map((row) =>
             Object.values(row).join(",")
         ).join("\n");
 
-        // Step 3: Create CSV string
         const csvString = `${headers}\n${rows}`;
 
-        // Step 4: Create Blob and trigger download
         const blob = new Blob([csvString], { type: "text/csv" });
         const url = URL.createObjectURL(blob);
 
