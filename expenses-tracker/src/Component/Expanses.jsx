@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import Navbar from './navbar'
+import Search from './search'
 
 const Expanses = () => {
     const [addTransaction, setAddTransaction] = useState({})
     const [transactionList, setTransactionList] = useState(() => {
         return JSON.parse(localStorage.getItem('transaction')) || []
     })
+    const [searchData, setSearchData] = useState('')
+    const [filterList, setFilterList] = useState([])
 
     const handleAddForm = (e) => {
         setAddTransaction({ ...addTransaction, [e.target.name]: e.target.value })
@@ -25,12 +28,29 @@ const Expanses = () => {
     }
 
     useEffect(() => {
-        localStorage.setItem('transaction', JSON.stringify(transactionList));
+        localStorage.setItem('transaction', JSON.stringify(transactionList))
+        setFilterList([...transactionList])
     }, [transactionList]);
+
+    const handleSearch = (e) => {
+        setSearchData(e.target.value)
+        if (e.target.value == '') {
+            setFilterList([...transactionList])
+        }
+        else {
+            let data = transactionList.filter((items) => {
+                if (e.target.value == items.paid) {
+                    return items
+                }
+            })
+            setFilterList([...data])
+        }
+    }
 
     return (
         <div>
             <Navbar />
+            <Search handleSearch={handleSearch} searchData={searchData} />
             <div className='m-5 p-5'>
                 <div className="grid grid-flow-col gap-4">
                     <div className='col-span-1 overflow-x-auto shadow-md sm:rounded-lg '>
@@ -85,9 +105,9 @@ const Expanses = () => {
                                         Transaction type :
                                     </label>
                                     <select className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                     name='transaction'
-                                     value={addTransaction.transaction}
-                                     onChange={handleAddForm}
+                                        name='transaction'
+                                        value={addTransaction.transaction}
+                                        onChange={handleAddForm}
                                     >
                                         <option className="px-4 py-4 text-lg	 bg-white border rounded-lg focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40 mb-2" defaultValue=''>Select an Option</option>
 
@@ -175,7 +195,7 @@ const Expanses = () => {
                             </thead>
                             <tbody>
 
-                                {transactionList.map((elements, index) => {
+                                {filterList.map((elements, index) => {
                                     return <tr key={index} className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
                                         <td className="px-6 py-4">{index + 1}</td>
                                         <td className="px-6 py-4">{elements.paid}</td>

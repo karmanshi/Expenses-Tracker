@@ -22,19 +22,17 @@ const Navbar = () => {
           <div className="hidden w-full md:block md:w-auto" id="navbar-default">
             <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg  md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 ">
 
-              <li>
+              <li className="block py-2 px-5 text-gray-400 rounded  dark:text-white text-gray-100 text-xl border-b-4 border-black rounded-full hover:border-yellow-500">
                 <Link
                   to="/"
-                  className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500  dark:hover:text-white md:dark:hover text-gray-300 text-xl"
                 >
                   Dashboard
                 </Link>
               </li>
 
-              <li>
+              <li className="block py-2 px-5 text-gray-400 rounded dark:text-white text-gray-100 text-xl border-b-4 border-black rounded-full hover:border-yellow-500">
                 <Link
                   to="/profile/"
-                  className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500  dark:hover:text-white md:dark:hover text-gray-300 text-xl"
                 >
                  Profile
                 </Link>
